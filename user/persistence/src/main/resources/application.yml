@@ -1,0 +1,8 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 12041
+      database: user
+      username: seungkyu
+      password: 1204
