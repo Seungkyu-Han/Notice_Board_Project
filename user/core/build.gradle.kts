@@ -15,6 +15,8 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
 
+    implementation(project(":user:persistence"))
+
     //WEBFLUX
     implementation("org.springframework.boot:spring-boot-starter-webflux")
 
