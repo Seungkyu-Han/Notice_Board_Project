@@ -9,3 +9,10 @@ include("user:core")
 findProject(":user:core")?.name = "core"
 include("user:persistence")
 findProject(":user:persistence")?.name = "persistence"
+include("post")
+include("post:presentation")
+findProject(":post:presentation")?.name = "presentation"
+include("post:core")
+findProject(":post:core")?.name = "core"
+include("post:persistence")
+findProject(":post:persistence")?.name = "persistence"
