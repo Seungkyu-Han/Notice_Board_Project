@@ -6,15 +6,20 @@ import org.springframework.web.reactive.function.server.coRouter
 import seungkyu.board.service.UserService
 
 @Configuration
-class UserRouter(
-) {
+class UserRouter {
 
     @Bean
     fun router(
         userService: UserService
     ) = coRouter {
-        "/users".nest {
 
+        "/users".nest {
+            POST("/signup", userService::register)
+            POST("/login", userService::login)
+            GET("/my-info", userService::getUserInfo)
+            PUT("/logout", userService::logout)
+            PATCH("/password", userService::updatePassword)
+            DELETE("/withdraw", userService::deleteId)
         }
     }
 }
