@@ -1,0 +1,7 @@
+PATCH http://localhost:8081/categories
+Content-Type: application/json
+
+{
+  "beforeName": "111",
+  "afterName": "1111"
+}
