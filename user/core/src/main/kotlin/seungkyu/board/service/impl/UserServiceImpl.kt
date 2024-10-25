@@ -3,13 +3,13 @@ package seungkyu.board.service.impl
 import kotlinx.coroutines.reactive.awaitFirst
 import kotlinx.coroutines.reactor.awaitSingle
 import kotlinx.coroutines.reactor.awaitSingleOrNull
-import org.slf4j.LoggerFactory
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.bodyValueAndAwait
 import org.springframework.web.reactive.function.server.buildAndAwait
+import seungkyu.board.aop.LoginCheck
 import seungkyu.board.data.enums.Status
 import seungkyu.board.dto.req.LoginReq
 import seungkyu.board.dto.req.RegisterReq
@@ -24,10 +24,6 @@ class UserServiceImpl(
     private val bCryptPasswordEncoder: BCryptPasswordEncoder,
     private val userMongoRepository: UserMongoRepository
 ) : UserService {
-
-    companion object {
-        private val log = LoggerFactory.getLogger(UserServiceImpl::class.java)
-    }
 
     override suspend fun register(serverRequest: ServerRequest): ServerResponse {
 
@@ -58,12 +54,12 @@ class UserServiceImpl(
     override suspend fun login(request: ServerRequest): ServerResponse {
         val loginReq = request.bodyToMono(LoginReq::class.java).awaitSingle()
 
-
         val user = userMongoRepository.findByUserId(loginReq.id).awaitSingleOrNull()
 
         return if(user != null && bCryptPasswordEncoder.matches(loginReq.password, user.password)){
             request.session()
                 .doOnNext{
+                    it.attributes["status"] = user.status
                     it.attributes["id"] = loginReq.id
                 }
                 .awaitFirst()
@@ -83,6 +79,7 @@ class UserServiceImpl(
         return userMongoRepository.existsByUserId(userId).awaitSingle()
     }
 
+    @LoginCheck(status = Status.DEFAULT)
     override suspend fun getUserInfo(request: ServerRequest): ServerResponse {
 
         val userId = request.session()
@@ -98,6 +95,7 @@ class UserServiceImpl(
         return ServerResponse.ok().bodyValueAndAwait(user)
     }
 
+    @LoginCheck(status = Status.DEFAULT)
     override suspend fun updatePassword(request: ServerRequest): ServerResponse {
         val updatePasswordReq = request.bodyToMono(UpdatePasswordReq::class.java).awaitSingle()
 
@@ -117,6 +115,7 @@ class UserServiceImpl(
         }
     }
 
+    @LoginCheck(status = Status.DEFAULT)
     override suspend fun deleteId(request: ServerRequest): ServerResponse {
 
         val userId = request.session()
@@ -127,13 +126,12 @@ class UserServiceImpl(
         val user = userMongoRepository.findByUserId(userId).awaitSingleOrNull()
             ?: return ServerResponse.status(403).buildAndAwait()
 
-        log.info("userId: {}", userId)
-
         userMongoRepository.delete(user).awaitSingleOrNull()
 
         return ServerResponse.ok().buildAndAwait()
     }
 
+    @LoginCheck(status = Status.DEFAULT)
     override suspend fun logout(request: ServerRequest): ServerResponse {
 
         request.session().map{
