@@ -13,6 +13,9 @@ class CategoryRouter {
         categoryService: CategoryServiceImpl
     ) = coRouter {
         "/categories".nest {
+            POST("", categoryService::create)
+            PATCH("", categoryService::update)
+            DELETE("", categoryService::delete)
         }
     }
 }
