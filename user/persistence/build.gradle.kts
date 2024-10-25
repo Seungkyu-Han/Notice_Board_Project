@@ -15,6 +15,8 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
 
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+
     //WEBFLUX
     implementation("org.springframework.boot:spring-boot-starter-webflux")
 
