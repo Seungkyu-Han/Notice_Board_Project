@@ -1,6 +1,6 @@
 package seungkyu.board.dto.req
 
-data class UpdateReq(
+data class UpdateCategoryReq(
     val beforeName: String,
     val afterName: String
 )
