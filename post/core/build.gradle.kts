@@ -37,6 +37,9 @@ dependencies {
 
     //AOP
     implementation("org.springframework.boot:spring-boot-starter-aop:3.1.2")
+
+    //KOTLIN
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
 }
 
 tasks.test {
