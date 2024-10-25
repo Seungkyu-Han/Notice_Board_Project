@@ -1,0 +1,11 @@
+POST http://localhost:8080/users/login
+Content-Type: application/json
+
+{
+  "id": "seungkyu",
+  "password": "12041204"
+}
+
+###
+DELETE http://localhost:8080/users/withdraw
+Content-Type: application/json
