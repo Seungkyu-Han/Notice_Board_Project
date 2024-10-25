@@ -15,7 +15,16 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
 
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+
+    //WEBFLUX
     implementation("org.springframework.boot:spring-boot-starter-webflux")
+
+    //MONGO
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
+
+    //REACTOR
+    implementation("io.projectreactor:reactor-tools")
 }
 
 tasks.test {

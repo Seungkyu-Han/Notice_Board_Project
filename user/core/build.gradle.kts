@@ -15,13 +15,25 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
 
+    implementation(project(":user:persistence"))
+
     //WEBFLUX
     implementation("org.springframework.boot:spring-boot-starter-webflux")
+
+    //MONGO
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
+
+    //lombok
+    compileOnly("org.projectlombok:lombok:1.18.34")
+    annotationProcessor("org.projectlombok:lombok:1.18.34")
 
     //COROUTINE
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-rx3")
+
+    //SPRING_SECURITY
+    implementation("org.springframework.boot:spring-boot-starter-security")
 }
 
 tasks.test {

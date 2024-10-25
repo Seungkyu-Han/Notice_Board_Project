@@ -1,15 +1,15 @@
 package seungkyu.board.service
 
-import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
 
 interface UserService {
 
-    fun register(serverRequest: ServerRequest): ServerResponse
-    fun login(request: ServerRequest): ServerResponse
-    fun isDuplicateId(request: ServerRequest): ServerResponse
-    fun getUserInfo(request: ServerRequest): ServerResponse
-    fun updatePassword(request: ServerRequest): ServerResponse
-    fun deleteId(request: ServerRequest): ServerResponse
+    suspend fun register(serverRequest: ServerRequest): ServerResponse
+    suspend fun login(request: ServerRequest): ServerResponse
+    suspend fun isDuplicateId(request: ServerRequest): ServerResponse
+    suspend fun getUserInfo(request: ServerRequest): ServerResponse
+    suspend fun updatePassword(request: ServerRequest): ServerResponse
+    suspend fun deleteId(request: ServerRequest): ServerResponse
+    suspend fun logout(request: ServerRequest): ServerResponse
 }
