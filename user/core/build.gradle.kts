@@ -34,6 +34,9 @@ dependencies {
 
     //SPRING_SECURITY
     implementation("org.springframework.boot:spring-boot-starter-security")
+
+    //AOP
+    implementation("org.springframework.boot:spring-boot-starter-aop:3.1.2")
 }
 
 tasks.test {
